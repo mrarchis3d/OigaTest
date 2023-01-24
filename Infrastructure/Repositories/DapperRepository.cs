@@ -1,11 +1,13 @@
 ﻿using Dapper;
+using Domain.DTOs.User;
 using Domain.Interfaces.Repositories;
 using Domain.Utils;
 using System.Data;
+using System.Text;
 
 namespace Infrastructure.Repositories
 {
-    public class DapperRepository<T, Tid> : IRepository<T, Tid> where T : class
+    public class DapperRepository<T, Tid>  : IRepository<T, Tid> where T : class
     {
         private readonly IDbConnection _connection;
         private readonly IDbTransaction _transaction;
@@ -40,14 +42,14 @@ namespace Infrastructure.Repositories
 
         public async Task<PagedResult<T>> GetAsync(PagedCriteria criteria)
         {
-            var sql = @$"
-                SELECT * FROM [dbo].[{typeof(T).Name}]
-                ORDER BY @SortBy @SortDirection
-                OFFSET @Offset ROWS
-                FETCH NEXT @PageSize ROWS ONLY;
-
-                SELECT COUNT(*) FROM {typeof(T).Name};
-            ";
+            StringBuilder sb= new StringBuilder();
+            sb.Append(@$"SELECT * FROM [dbo].[{typeof(T).Name}] ");
+            if(!string.IsNullOrEmpty(criteria.SortBy))
+                sb.Append($"ORDER BY @SortBy @SortDirection ");
+            else
+                sb.Append($"ORDER BY Id Asc ");
+            sb.Append($"OFFSET @Offset ROWS FETCH NEXT @PageSize ROWS ONLY; ");
+            sb.Append($"SELECT COUNT(*) FROM [dbo].[{typeof(T).Name}];");
 
             var parameters = new
             {
@@ -57,13 +59,13 @@ namespace Infrastructure.Repositories
                 PageSize = criteria.PageSize
             };
 
-            using var multi = _connection.QueryMultiple(sql, parameters, transaction: _transaction);
-            var products = await multi.ReadAsync<T>();
+            using var multi = _connection.QueryMultiple(sb.ToString(), parameters, transaction: _transaction);
+            var values = await multi.ReadAsync<T>();
             var total = multi.ReadSingle<int>();
 
             return new PagedResult<T>
             {
-                Results = products,
+                Results = values,
                 Total = total
             };
         }

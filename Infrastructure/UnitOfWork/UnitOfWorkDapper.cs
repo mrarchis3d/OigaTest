@@ -4,6 +4,7 @@ using Domain.Interfaces.Repositories;
 using Domain.Interfaces.UnitOfWork;
 using Infrastructure.Repositories;
 using System.Data;
+using System.Security.Cryptography;
 
 namespace Infrastructure.UnitOfWork;
 
@@ -16,10 +17,9 @@ public class UnitOfWorkDapper : IUnitOfWork
     private readonly IDbTransaction _transaction;
     private bool _disposed;
 
-    public IRepository<T, Tid> GetRepository<T, Tid>() where T : class
-    {
-        return new DapperRepository<T, Tid>(_connection, _transaction);
-    }
+    public IRepository<T, Tid> GetRepository<T, Tid>() where T : class => new DapperRepository<T, Tid>(_connection, _transaction);
+
+    public IUserRepository<T, Tid> GetUserRepository<T, Tid>() where T : class => new UserRepository<T, Tid>(_connection, _transaction);
 
     public UnitOfWorkDapper(IDbConnectionFactory dbFactory, Databases dbs = Databases.Test1)
     {

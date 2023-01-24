@@ -45,4 +45,9 @@ public class UnitOfWorkEF<TContext> : IUnitOfWork where TContext : DbContext
             _disposed = true;
         }
     }
+
+    public IUserRepository<T, Tid> GetUserRepository<T, Tid>() where T : class
+    {
+        throw new NotImplementedException();
+    }
 }

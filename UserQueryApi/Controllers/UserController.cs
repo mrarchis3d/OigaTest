@@ -1,6 +1,6 @@
-﻿using ApplicationMediatr.Commands.User;
-using ApplicationMediatr.Exceptions;
+﻿using ApplicationMediatr.Exceptions;
 using ApplicationMediatr.Queries.User;
+using UserEntity = Domain.EntitiesModels.User;
 using Domain.DTOs.User;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -18,17 +18,17 @@ namespace APIMediatr.Controllers
             _mediator = mediator;
         }
 
-        [HttpPost("/GetFiltered")]
+        [HttpPost("GetFiltered")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<UserDTO>))]
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorMessage))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ErrorMessage))]
         public async Task<ActionResult<IEnumerable<UserDTO>>> GetUsersAsync(UserGetQuery pageCriteria) => Ok(await _mediator.Send(pageCriteria));
 
-        [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<UserDTO>))]
+        [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UserEntity))]
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorMessage))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ErrorMessage))]
-        public async Task<ActionResult<UserDTO>> GetUserByIdAsync([FromQuery]int id) => Ok(await _mediator.Send(new UserGetByIdQuery { Id = id}));
+        public async Task<ActionResult<UserEntity>> GetUserByIdAsync(int id) => Ok(await _mediator.Send(new UserGetByIdQuery { Id = id}));
 
     }
 }

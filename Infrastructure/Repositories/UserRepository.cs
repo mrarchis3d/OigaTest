@@ -2,6 +2,7 @@
 using Domain.DTOs.User;
 using Domain.Interfaces.Repositories;
 using Domain.Utils;
+using Microsoft.Extensions.Primitives;
 using System.Data;
 using System.Text;
 
@@ -86,17 +87,18 @@ namespace Infrastructure.Repositories
         {
             StringBuilder sb = new StringBuilder();
             sb.Append(@$"SELECT * FROM [dbo].[{typeof(T).Name}] ");
-            sb.Append("WHERE ");
-            var replaces = Patterns.GenerateReplacesSQL(new List<string> { "FirstName", "LastName", "UserName" }, criteria.SearchWords);
-            sb.Append(replaces);
+            if(criteria.SearchWords!=null && !string.IsNullOrEmpty(criteria.SearchWords))
+                sb.Append("WHERE "+Patterns.GenerateReplacesSQL(new List<string> { "FirstName", "LastName", "UserName" }, criteria.SearchWords));
 
             if (!string.IsNullOrEmpty(criteria.SortBy))
                 sb.Append($"ORDER BY @SortBy @SortDirection ");
             else
                 sb.Append($"ORDER BY FirstName, LastName, UserName ");
             sb.Append($"OFFSET @Offset ROWS FETCH NEXT @PageSize ROWS ONLY; ");
-            sb.Append($"SELECT COUNT(*) FROM [dbo].[{typeof(T).Name}];");
-
+            sb.Append($"SELECT COUNT(*) FROM [dbo].[{typeof(T).Name}] ");
+            if (criteria.SearchWords != null && !string.IsNullOrEmpty(criteria.SearchWords))
+                sb.Append("WHERE " + Patterns.GenerateReplacesSQL(new List<string> { "FirstName", "LastName", "UserName" }, criteria.SearchWords));
+            sb.Append(";");
             var parameters = new
             {
                 SearchWords = criteria.SearchWords,

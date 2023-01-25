@@ -4,7 +4,6 @@ namespace Domain.DTOs.User;
 
 public class UserDTO : BaseEntity
 {
-    public string FirstName { get; set; }
-    public string LastName { get; set; }
-    public string Username { get; set; }
+    public string FullName { get; set; }
+    public string UserName { get; set; }
 }

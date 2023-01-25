@@ -2,15 +2,16 @@
 using Domain.DTOs.User;
 using Domain.EntitiesModels;
 using Domain.Interfaces.UnitOfWork;
+using UserEntity = Domain.EntitiesModels.User;
 using MediatR;
 
 namespace ApplicationMediatr.Queries.User;
 
 
-public class UserGetByIdQuery : BaseId, IRequest<UserDTO>
+public class UserGetByIdQuery : BaseId, IRequest<UserEntity>
 {
 }
-public class UserGetByIdQueryHandler : IRequestHandler<UserGetByIdQuery, UserDTO>
+public class UserGetByIdQueryHandler : IRequestHandler<UserGetByIdQuery, UserEntity>
 {
     private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;
@@ -20,9 +21,8 @@ public class UserGetByIdQueryHandler : IRequestHandler<UserGetByIdQuery, UserDTO
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<UserDTO> Handle(UserGetByIdQuery request, CancellationToken cancellationToken)
+    public async Task<UserEntity> Handle(UserGetByIdQuery request, CancellationToken cancellationToken)
     {
-        var result = await _unitOfWork.GetUserRepository<Domain.EntitiesModels.User, int>().GetByIdAsync(request.Id);
-        return _mapper.Map<UserDTO>(result);
+        return await _unitOfWork.GetUserRepository<UserEntity, int>().GetByIdAsync(request.Id);
     }
 }

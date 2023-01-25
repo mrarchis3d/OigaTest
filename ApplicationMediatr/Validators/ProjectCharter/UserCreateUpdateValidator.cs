@@ -12,7 +12,7 @@ public class UserCreateUpdateValidator : AbstractValidator<UserCreateUpdateComma
         RuleFor(prop => prop.LastName)
             .NotEmpty().WithMessage("{PropertyName} No puede Ser vacio")
             .MaximumLength(100).WithMessage("{PropertyName} no debe exceder {MaxLenght} caracteres");
-        RuleFor(prop => prop.Username)
+        RuleFor(prop => prop.UserName)
             .NotEmpty().WithMessage("{PropertyName} No puede Ser vacio")
             .MaximumLength(25).WithMessage("{PropertyName} no debe exceder {MaxLenght} caracteres");
     }

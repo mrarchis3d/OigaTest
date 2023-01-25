@@ -1,6 +1,7 @@
 ﻿using ApplicationMediatr.Commands.User;
 using ApplicationMediatr.Exceptions;
 using Domain.DTOs.User;
+using Domain.EntitiesModels;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,7 +19,7 @@ namespace APIMediatr.Controllers
         }
 
         [HttpPost]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UserDTO))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(User))]
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorMessage))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ErrorMessage))]
         public async Task<ActionResult<UserDTO>> Create(UserCreateUpdateCommand user) => Ok(await _mediator.Send(user));

@@ -1,16 +1,16 @@
 ﻿using ApplicationMediatr.Exceptions;
 using AutoMapper;
 using Domain.DTOs.User;
-using Domain.EntitiesModels;
+using UserEnity = Domain.EntitiesModels.User;
 using Domain.Interfaces.UnitOfWork;
 using MediatR;
 
 namespace ApplicationMediatr.Commands.User;
 
-public class UserCreateUpdateCommand : UserCreateUpdate, IRequest<UserDTO>
+public class UserCreateUpdateCommand : UserCreateUpdate, IRequest<UserEnity>
 {
 }
-public class UserCreateUpdateCommandHandler : IRequestHandler<UserCreateUpdateCommand, UserDTO>
+public class UserCreateUpdateCommandHandler : IRequestHandler<UserCreateUpdateCommand, UserEnity>
 {
     private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;
@@ -19,7 +19,7 @@ public class UserCreateUpdateCommandHandler : IRequestHandler<UserCreateUpdateCo
         _mapper = mapper;
         _unitOfWork = unitOfWork;
     }
-    public async Task<UserDTO> Handle(UserCreateUpdateCommand request, CancellationToken cancellationToken)
+    public async Task<UserEnity> Handle(UserCreateUpdateCommand request, CancellationToken cancellationToken)
     {
 
         var userCreate = _mapper.Map<Domain.EntitiesModels.User>(request);
@@ -38,6 +38,6 @@ public class UserCreateUpdateCommandHandler : IRequestHandler<UserCreateUpdateCo
             userGenerated.DateCreated = findUser.DateCreated;
         }
         _unitOfWork.SaveChanges();
-        return _mapper.Map<UserDTO>(userGenerated);
+        return userGenerated;
     }
 }

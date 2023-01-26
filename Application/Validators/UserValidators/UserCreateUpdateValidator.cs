@@ -1,6 +1,6 @@
-﻿using ApplicationMediatr.Commands.User;
+﻿using Application.Commands.User;
 using FluentValidation;
-namespace ApplicationMediatr.Validators.ProjectCharter;
+namespace Application.Validators.ProjectCharter;
 
 public class UserCreateUpdateValidator : AbstractValidator<UserCreateUpdateCommand>
 {

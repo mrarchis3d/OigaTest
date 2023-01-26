@@ -1,10 +1,10 @@
-﻿using ApplicationMediatr.Exceptions;
+﻿using Application.Exceptions;
 using AutoMapper;
 using Domain.EntitiesModels;
 using Domain.Interfaces.UnitOfWork;
 using MediatR;
 
-namespace ApplicationMediatr.Commands.User
+namespace Application.Commands.User
 {
     public class UserDeleteCommand : BaseId,  IRequest
     {

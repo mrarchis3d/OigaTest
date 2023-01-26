@@ -1,4 +1,4 @@
-﻿using ApplicationMediatr.Filters;
+﻿using Application.Filters;
 using Domain.Interfaces.Data;
 using Domain.Interfaces.UnitOfWork;
 using FluentValidation;
@@ -7,9 +7,9 @@ using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 using Infrastructure.Data;
-using ApplicationMediatr.Behaviors;
+using Application.Behaviors;
 
-namespace ApplicationMediatr
+namespace Application
 {
     public static class ServiceExtensions
     {

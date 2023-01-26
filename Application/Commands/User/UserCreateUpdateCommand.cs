@@ -1,11 +1,11 @@
-﻿using ApplicationMediatr.Exceptions;
+﻿using Application.Exceptions;
 using AutoMapper;
 using Domain.DTOs.User;
 using UserEnity = Domain.EntitiesModels.User;
 using Domain.Interfaces.UnitOfWork;
 using MediatR;
 
-namespace ApplicationMediatr.Commands.User;
+namespace Application.Commands.User;
 
 public class UserCreateUpdateCommand : UserCreateUpdate, IRequest<UserEnity>
 {

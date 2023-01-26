@@ -2,7 +2,7 @@
 using System.Net;
 using System.Text;
 
-namespace ApplicationMediatr.Exceptions
+namespace Application.Exceptions
 {
     public class ErrorMessage
     {

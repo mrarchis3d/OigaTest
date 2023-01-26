@@ -1,4 +1,4 @@
-using ApplicationMediatr;
+using Application;
 using Domain.Utils;
 
 var builder = WebApplication.CreateBuilder(args);

@@ -1,4 +1,4 @@
-﻿using ApplicationMediatr.Commands.User;
+﻿using Application.Commands.User;
 using FluentValidation;
 
 namespace ApplicationMediatr.Validators.ProjectCharter

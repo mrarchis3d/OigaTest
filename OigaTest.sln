@@ -7,9 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{47A99600-DA80-4FAE-B09C-2F0F462F3B38}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UserCommandApi", "APIMediatr\UserCommandApi.csproj", "{CD76CF66-9222-4596-9C9D-252759C68410}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UserCommandApi", "UserCommandApi\UserCommandApi.csproj", "{CD76CF66-9222-4596-9C9D-252759C68410}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApplicationMediatr", "ApplicationMediatr\ApplicationMediatr.csproj", "{D6DECD99-6351-40AB-8F04-FCB464B34979}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "Application\Application.csproj", "{D6DECD99-6351-40AB-8F04-FCB464B34979}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserQueryApi", "UserQueryApi\UserQueryApi.csproj", "{6E1C27D3-A8F4-4BF6-9C3E-A011DC62F482}"
 EndProject

@@ -1,8 +1,8 @@
-﻿using ApplicationMediatr.Commands.User;
-using ApplicationMediatr.Queries.User;
+﻿using Application.Commands.User;
+using Application.Queries.User;
 using FluentValidation;
 
-namespace ApplicationMediatr.Validators.ProjectCharter
+namespace Application.Validators.ProjectCharter
 {
     public class UserGetQueryValidator : AbstractValidator<UserGetQuery>
     {

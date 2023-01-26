@@ -1,9 +1,9 @@
-﻿using ApplicationMediatr.Exceptions;
+﻿using Application.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Logging;
 
-namespace ApplicationMediatr.Filters
+namespace Application.Filters
 {
     public class ErrorHandlingFilterAttribute : ExceptionFilterAttribute
     {

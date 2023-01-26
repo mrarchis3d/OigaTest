@@ -3,7 +3,7 @@ using Domain.DTOs.User;
 using Domain.EntitiesModels;
 using Domain.Utils;
 
-namespace ApplicationMediatr.MapperProfiles.UserProfile
+namespace Application.MapperProfiles.UserProfile
 {
     public class UserProfile : Profile
     {

@@ -1,12 +1,12 @@
-﻿using ApplicationMediatr.Exceptions;
-using ApplicationMediatr.Queries.User;
+﻿using Application.Exceptions;
+using Application.Queries.User;
 using UserEntity = Domain.EntitiesModels.User;
 using Domain.DTOs.User;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 
-namespace APIMediatr.Controllers
+namespace UserQueryApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

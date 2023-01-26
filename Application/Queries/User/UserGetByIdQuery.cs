@@ -5,7 +5,7 @@ using Domain.Interfaces.UnitOfWork;
 using UserEntity = Domain.EntitiesModels.User;
 using MediatR;
 
-namespace ApplicationMediatr.Queries.User;
+namespace Application.Queries.User;
 
 
 public class UserGetByIdQuery : BaseId, IRequest<UserEntity>

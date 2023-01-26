@@ -4,7 +4,7 @@ using Domain.Interfaces.UnitOfWork;
 using Domain.Utils;
 using MediatR;
 
-namespace ApplicationMediatr.Queries.User;
+namespace Application.Queries.User;
 
 public class UserGetQuery : UserPaged, IRequest<PagedResult<UserDTO>>
 {

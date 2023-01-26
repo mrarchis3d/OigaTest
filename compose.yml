@@ -1,0 +1,14 @@
+version: '3'
+services:
+  # UserCommandApi:
+  #   build:
+  #     context: .
+  #     dockerfile: UserCommandApi/dockerfile
+  #   ports:
+  #     - "8000:80"
+  user-queryapi:
+    build:
+      context: .
+      dockerfile: UserQueryApi/dockerfile
+    ports:
+      - "8001:80"

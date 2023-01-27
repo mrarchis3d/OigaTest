@@ -14,15 +14,15 @@ interface TableWithInfiniteScrollProps {
 }
  
 const TableWithInfiniteScroll : React.FC<TableWithInfiniteScrollProps> = ({ data, currentPage, pageSize, onScroll, isLoading }) => {
-	const [visibleData, setVisibleData] = useState(data.slice(0, (currentPage + 1) * pageSize));
+	// const [visibleData, setVisibleData] = useState(data.slice(0, (currentPage + 1) * pageSize));
   
-	useEffect(() => {
-	  setVisibleData(data.slice(currentPage * pageSize, (currentPage + 1) * pageSize));
-	}, [currentPage, data, pageSize]);
+	// useEffect(() => {
+	//   setVisibleData(data.slice(currentPage * pageSize, (currentPage + 1) * pageSize));
+	// }, [currentPage, data, pageSize]);
   
-	useEffect(() => {
-		setVisibleData(data.slice(0, (currentPage + 1) * pageSize));
-	  }, [currentPage, data, pageSize]);
+	// useEffect(() => {
+	// 	setVisibleData(data.slice(0, (currentPage + 1) * pageSize));
+	//   }, [currentPage, data, pageSize]);
 
 	return (
 		<div onScroll={onScroll} style={{ height: '300px', overflow: 'auto' }}>

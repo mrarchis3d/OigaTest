@@ -34,9 +34,9 @@ const Home : React.FC = () => {
 		return GetFilteredUsers(page);
 	}
 	
-	function fetchData(addNewRows:boolean, pageNumber: number, searchValue: string) : number {
+	async function fetchData(addNewRows:boolean, pageNumber: number, searchValue: string) : Promise<number> {
 		setIsLoading(true);
-		getNewRows(pageNumber, searchValue)
+		await getNewRows(pageNumber, searchValue)
 		  .then((response) => {
 			if(addNewRows){
 				setData(data.concat(response.results));
@@ -46,6 +46,8 @@ const Home : React.FC = () => {
 			}
 			setHasMore(data.length < response.total);
 			setCount(response.total);
+			console.log(response)
+
 			return data.length;
 			//setIsLoading(false);
 		  })
@@ -65,6 +67,7 @@ const Home : React.FC = () => {
 	useEffect(() => {
 		setCurrentPage(1);
 		setData([]);
+		setCount(0);
 		fetchData(false, 1, searchValue);
 		setIsLoading(false);
 	  }, [searchValue, hasMore]
@@ -84,7 +87,6 @@ const Home : React.FC = () => {
 				}
 			  }
 		}
-
 	  };
 	  
 	return (

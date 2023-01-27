@@ -9,12 +9,11 @@ interface TableWithInfiniteScrollProps {
 	data: User[];
 	currentPage: number;
 	pageSize: number;
-	hasMore: boolean;
 	onScroll: (event: any) => void;
 	isLoading: boolean;
 }
  
-const TableWithInfiniteScroll : React.FC<TableWithInfiniteScrollProps> = ({ data, currentPage, pageSize, hasMore, onScroll, isLoading }) => {
+const TableWithInfiniteScroll : React.FC<TableWithInfiniteScrollProps> = ({ data, currentPage, pageSize, onScroll, isLoading }) => {
 	const [visibleData, setVisibleData] = useState(data.slice(0, (currentPage + 1) * pageSize));
   
 	useEffect(() => {
@@ -29,7 +28,7 @@ const TableWithInfiniteScroll : React.FC<TableWithInfiniteScrollProps> = ({ data
 		<div onScroll={onScroll} style={{ height: '300px', overflow: 'auto' }}>
 		  <Table>
 			<TableBody>
-			  {visibleData.map((row: User, index: number) => (
+			  {data.map((row: User, index: number) => (
 				<TableRow key={index}>
 				  <TableCell>{index+1}</TableCell>
 				  <TableCell>{row.fullName}</TableCell>

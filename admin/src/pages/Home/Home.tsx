@@ -1,6 +1,5 @@
-import { CircularProgress, FormLabel, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from '@mui/material';
-import { executionAsyncResource } from 'async_hooks';
-import React, { useCallback, useEffect, useReducer, useRef, useState } from 'react';
+import { FormLabel, TextField } from '@mui/material';
+import React, {  useEffect, useState } from 'react';
 import { TableWithInfiniteScroll } from '../../components/TableWithInfiniteScroll';
 import { User } from '../../models/User/User';
 import { UserPaged } from '../../models/User/UserPaged';
@@ -10,26 +9,6 @@ import { LayoutContainer } from '../../styled-components';
 
 
 
-interface State {
-	count: number;
-  }
-  
-  export interface Action {
-	type: 'increment' | 'initialState';
-  }
-  
-  const initialState: State = { count: 1 };
-  
-  const reducer = (state: State, action: Action): State => {
-	switch (action.type) {
-	  case 'increment':
-		return { count: state.count + 1 };
-	  case 'initialState':
-		return { count: 1 };
-	  default:
-		return state;
-	}
-  };
 const Home : React.FC = () => {
 	const [currentPage, setCurrentPage] = useState(1);
 	const [searchValue, setSearchValue] = useState('');
@@ -39,10 +18,7 @@ const Home : React.FC = () => {
   	const [count, setCount] = useState(0);
   	const pageSize = 10;
 
-	useEffect(() => {
-		setIsLoading(true);
-		fetchData(true, currentPage, searchValue);
-	  }, [currentPage]);
+
 
 	
 	const handleChange = async (event: React.ChangeEvent<HTMLInputElement>)  => {
@@ -58,53 +34,82 @@ const Home : React.FC = () => {
 		return GetFilteredUsers(page);
 	}
 	
-	function fetchData(addNewRows:boolean, pageNumber: number, searchValue: string) {
+	function fetchData(addNewRows:boolean, pageNumber: number, searchValue: string) : number {
+		setIsLoading(true);
 		getNewRows(pageNumber, searchValue)
 		  .then((response) => {
-			if(addNewRows)
+			if(addNewRows){
 				setData(data.concat(response.results));
-			else
+			}
+			else{
 				setData(response.results);
-			setHasMore(response.results.length <= pageSize);
+			}
+			setHasMore(data.length < response.total);
 			setCount(response.total);
-			setIsLoading(false);
+			return data.length;
+			//setIsLoading(false);
 		  })
 		  .catch((error) => {
 			console.error(error);
-			setIsLoading(false);
 		  });
+		return 0;
 	}
 
 	useEffect(() => {
+		if(hasMore){
+			fetchData(true, currentPage, searchValue);
+			setIsLoading(false);
+		}
+	  }, [currentPage, hasMore]);
+
+	useEffect(() => {
 		setCurrentPage(1);
+		setData([]);
 		fetchData(false, 1, searchValue);
-	  }, [searchValue]
+		setIsLoading(false);
+	  }, [searchValue, hasMore]
 	);
 
 
 	const handleScroll = (event: any) => {
-		if (!isLoading && hasMore) {
-		  if (event.target.offsetHeight + event.target.scrollTop+1 >= event.target.scrollHeight) {
-			setCurrentPage(currentPage + 1);
-		  }
+
+		if(data.length < count){
+			let valueScroll = event.target.offsetHeight + event.target.scrollTop;
+			if (hasMore) {
+				if(currentPage>3){
+					valueScroll++;
+				}
+				if (valueScroll >= event.target.scrollHeight) {
+				  	setCurrentPage(currentPage + 1);
+				}
+			  }
 		}
+
 	  };
 	  
 	return (
 		<>
 			<TextField id="outlined-basic" label="Filter Search" variant="outlined" style={{  width: '500px' }} onChange={handleChange}/>
 			<br></br>
+			<br></br>
+			{count==0 ? <><br></br><strong>Data Not Found</strong></>: <>
+			
 			<LayoutContainer>
 				
-			<TableWithInfiniteScroll data={data}
-					currentPage={currentPage}
-					pageSize={pageSize}
-					hasMore={hasMore}
-					onScroll={handleScroll}
-					isLoading={isLoading} />
-			</LayoutContainer>
+				<TableWithInfiniteScroll data={data}
+						currentPage={currentPage}
+						pageSize={pageSize}
+						onScroll={handleScroll}
+						isLoading={isLoading} />
+				</LayoutContainer>
+				<br></br>
+				
+				<FormLabel>Pages:{currentPage} ||  Showed:{data.length}  ||  Total Count:{count}</FormLabel>
+			
+			
+			</>}
 			<br></br>
-			<FormLabel>Pages:{currentPage} ||  Showed:{data.length}  ||  Total Count:{count}</FormLabel>
+
 		</>
 	);
 };

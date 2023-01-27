@@ -1,7 +1,9 @@
 import axios from 'axios';
 
+console.log(import.meta.env.URL_API)
+console.log(import.meta.env.KEY)
 const instance = axios.create({
-  baseURL: 'http://localhost:5258/api/'
+  baseURL: import.meta.env.VITE_URL_API
 });
 
 // Add a request interceptor
